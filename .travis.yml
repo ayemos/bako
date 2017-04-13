@@ -1,5 +1,13 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.3.3
+- 2.3.3
 before_install: gem install bundler -v 1.14.6
+deploy:
+  provider: rubygems
+  api_key:
+    secure: bVmhqQi0lR5UjoAPJsnhZPFcBYggOmQIlVZLV515US0qEwP7lDdOLY9arWLOubfd0Kr7UXp15a2JS5IiSMw9TcAKIiAeTAm9sbtha2R0qaPGJTnmE4pkn07aef3u/zg6zXdT8kj52142sket+fp//mJgKGPrlN41Tx+3xBC5+tZWQFOciUTKSz4+rpY9xgI6RECp+P5TLoopowCPvZpC3z4N5XVzzlvL+JMVnBEEc6+qXRNieasrwxzhOkY7qTj3x/tSDMjMnv+CMDUZrxVrwARZv1MJRL1alN/pCTsQr6e6iL7iBfvLL2Iy02GX1gRCi61MCJltjdPhQWm7mjV8+G4AwGVkrkJwMD5yBgt9g79lahLv9v0KIf8sxK7cMg0jYKW+apl8/hctZnkI9dy8eSw500F2obCg/iEznz3+t16NiMoBtD8Dk7Etg6DSnuiPzCGlRAq5zDIx5YRzl+1NyAmnGSgcmQkF82dKEkOyKUVLqWGJ9J+O0sFMnAOk0Lw5TaYjd2+1CzuXPmXnN+wgRxnCQKtZdVZ77PhL+NXihcvRHew8nkW0DRLe7k2qI1AQzQrSk0v13LE4mlm8ZhcOTDxbFqGn9+p7HmzWZX3dbxBb3dsuBUbhf1JBBvcbiar1CUf59LUzlJ8xADOOqbbb4uo4Z/TGb1y5UAXYSRuMpnQ=
+  gem: bako
+  on:
+    tags: true
+    repo: ayemos/bako
