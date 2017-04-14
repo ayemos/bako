@@ -5,15 +5,18 @@ require 'bako/dsl/context'
 require 'bako/dsl/context/job_definition'
 
 RSpec.describe Bako::DSL::Context::JobDefinition do
-  let(:hello_fixture) { 'hello.rb' }
+  let(:hello_fixture) { File.read(fixture_root.join('hello.rb')) }
   let(:hello_result) {
-    Bako::DSL.parse(File.read(fixture_root.join(hello_fixture))).jobs['hello']
+    Bako::DSL.parse(hello_fixture).job_definitions['hello_def']
   }
 
-  it 'create hello job' do
-    expect(hello_result.name).to eq('hello')
-    expect(hello_result.command_b).to eq (['echo', 'hello'])
-    expect(hello_result.memory_b).to eq (256)
-    expect(hello_result.vcpus_b).to eq (4)
+  let(:missing_type_fixture) { File.read(fixture_root.join('missing_type.rb')) }
+
+  it 'can parse job_definition' do
+    expect(hello_result.name).to eq('hello_def')
+  end
+
+  it 'raise when missing required params' do
+    expect{Bako::DSL.parse(missing_type_fixture)}.to raise_error(Bako::InvalidArgumentError)
   end
 end

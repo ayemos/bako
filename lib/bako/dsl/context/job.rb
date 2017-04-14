@@ -6,9 +6,15 @@ module Bako
       @name = name
 
       instance_eval(&block)
+      validate!
     end
 
     private
+
+    def validate!
+      raise InvalidArgumentError.new('job_queue must be set') unless @job_queue_b
+      raise InvalidArgumentError.new('job_definition must be set') unless @job_definition_b
+    end
 
     def job_definition(jd)
       if jd.nil?
@@ -20,8 +26,7 @@ module Bako
           jd
         elsif jd.is_a?(String)
           remote_job_definition(jd)
-        else raise InvalidArgumentError.new('JobDefinition must be String or Bako::DSL::Context::JobDefinition')
-        end
+        else raise InvalidArgumentError.new('JobDefinition must be String or Bako::DSL::Context::JobDefinition') end
     end
 
     def depends_on(jobs)

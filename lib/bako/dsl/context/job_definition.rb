@@ -5,12 +5,16 @@ module Bako
 
     def initialize(name, &block)
       @name = name
-      @type_b = 'container'
 
       instance_eval(&block)
+      validate!
     end
 
     private
+
+    def validate!
+      raise InvalidArgumentError.new('type must be set') unless @type_b
+    end
 
     def type(job_type)
       @type_b = job_type

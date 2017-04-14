@@ -7,6 +7,8 @@ module Bako
   end
 end
 
+require 'bako/error'
+
 require 'bako/dsl'
 require 'bako/dsl/context'
 require 'bako/dsl/context/job'
