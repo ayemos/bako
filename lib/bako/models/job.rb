@@ -42,13 +42,19 @@ module Bako
           d_ids << job.start.job_id
         end
 
+        Bako.logger.info("Submitting job #{@name}")
         # start job
         resp = batch_client.submit_job({
           job_definition: @job_definition.name,
           job_name: @name,
           job_queue: @job_queue,
           depends_on: @depends_on&.map{|j| [[:job_id, j.id]].to_h},
-          parameters: @param
+          parameters: @param,
+          container_overrides: {
+            command: @command,
+            vcpus: @vcpus,
+            memory: @memory
+          }
         })
 
         @id = resp.job_id

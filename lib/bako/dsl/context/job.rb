@@ -20,8 +20,7 @@ module Bako
           jd
         elsif jd.is_a?(String)
           remote_job_definition(jd)
-        else
-          raise InvalidArgumentError.new('JobDefinition must be String or Bako::DSL::Context::JobDefinition')
+        else raise InvalidArgumentError.new('JobDefinition must be String or Bako::DSL::Context::JobDefinition')
         end
     end
 
@@ -54,7 +53,11 @@ module Bako
     end
 
     def command(command_b)
-      @command_b = command_b
+      if command_b.is_a?(Array)
+        @command_b = command_b.map(&:to_s)
+      else
+        @command_b = command_b.split.map(&:to_s)
+      end
     end
   end
 end
