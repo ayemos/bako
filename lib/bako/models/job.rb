@@ -18,7 +18,7 @@ module Bako
           context.param_b,
           context.memory_b,
           context.vcpus_b,
-          context.job_queue
+          context.job_queue_b
         )
       end
 
