@@ -1,10 +1,9 @@
 module Bako
   class DSL::Context::Job
-    attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b
+    attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b, :job_queue_b
 
     def initialize(name, &block)
       @name = name
-      @param_b = {}
 
       instance_eval(&block)
     end
@@ -48,6 +47,10 @@ module Bako
 
     def vcpus(vcpus_b)
       @vcpus_b = vcpus_b
+    end
+
+    def job_queue(job_queue_b)
+      @job_queue_b = job_queue_b
     end
   end
 end

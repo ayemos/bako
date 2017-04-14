@@ -6,7 +6,7 @@ module Bako
     class Job
       include Bako::CommonHelper
 
-      attr_reader :name, :job_definition, :depends_on, :param, :id, :memory, :vcpus
+      attr_reader :name, :job_definition, :depends_on, :param, :id, :memory, :vcpus, :job_queue
 
       def self.from_context(context)
         new(
@@ -17,17 +17,19 @@ module Bako
           },
           context.param_b,
           context.memory_b,
-          context.vcpus_b
+          context.vcpus_b,
+          context.job_queue
         )
       end
 
-      def initialize(name, job_definition, depends_on, param, memory, vcpus)
+      def initialize(name, job_definition, depends_on, param, memory, vcpus, job_queue)
         @name = name
         @job_definition = job_definition
         @depends_on = depends_on
         @param = param
         @memory = memory
         @vcpus = vcpus
+        @job_queue = job_queue
       end
 
       def start
@@ -42,7 +44,7 @@ module Bako
         resp = batch_client.submit_job({
           job_definition: @job_definition.name,
           job_name: @name,
-          job_queue: 'ayemos-batche-queue-002',
+          job_queue: @job_queue,
           depends_on: @depends_on&.map{|j| [[:job_id, j.id]].to_h},
           parameters: @param
         })
