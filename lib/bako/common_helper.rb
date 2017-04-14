@@ -6,10 +6,9 @@ module Bako
       vcpus: 1,
       memory: 128
     }
+
     def batch_client
       @batch_client ||= Aws::Batch::Client.new
-    end
-    def remote_resource(arn)
     end
 
     def remote_job_definition(name_or_arn, status=nil)
