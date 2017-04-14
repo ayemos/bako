@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bako
   class DSL::Context::Job
     attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b, :job_queue_b, :command_b

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bako
   class CLI::Run
     include Bako::CommonHelper

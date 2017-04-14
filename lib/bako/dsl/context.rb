@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bako::DSL::Context
   attr_reader :jobs, :job_definitions
 

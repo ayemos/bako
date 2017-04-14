@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bako::DSL
   class << self
     def parse(dsl)

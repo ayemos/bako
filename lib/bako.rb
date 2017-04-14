@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "bako/version"
 require 'bako/common_helper'
 
