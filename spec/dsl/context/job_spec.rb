@@ -13,6 +13,14 @@ RSpec.describe Bako::DSL::Context::Job do
   let(:missing_def_fixture) { File.read(fixture_root.join('missing_def.rb')) }
   let(:missing_queue_fixture) { File.read(fixture_root.join('missing_queue.rb')) }
 
+  let(:command_fixture) { File.read(fixture_root.join('command.rb')) }
+  let(:command_result_space) {
+    Bako::DSL.parse(command_fixture).jobs['command_space']
+  }
+  let(:command_result_int) {
+    Bako::DSL.parse(command_fixture).jobs['command_int']
+  }
+
   it 'can parse job context' do
     expect(hello_result.name).to eq('hello')
     expect(hello_result.command_b).to eq (['echo', 'hello'])
@@ -23,5 +31,10 @@ RSpec.describe Bako::DSL::Context::Job do
   it 'raise when missing required params' do
     expect{Bako::DSL.parse(missing_def_fixture)}.to raise_error(Bako::InvalidArgumentError)
     expect{Bako::DSL.parse(missing_queue_fixture)}.to raise_error(Bako::InvalidArgumentError)
+  end
+
+  it 'can parse job commands' do
+    expect(command_result_space.command_b).to eq(['echo', 'hello'])
+    expect(command_result_int.command_b).to eq(['sleep', '10'])
   end
 end
