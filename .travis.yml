@@ -3,6 +3,10 @@ language: ruby
 rvm:
 - 2.3.3
 before_install: gem install bundler -v 1.14.6
+addons:
+  code_climate:
+    repo_token:
+      secure: "rzEVWgZoxVjhiqC3YwS3h2+aYLlA8FWnEuHfrvFS7kRbiOmA0h8STR7ajMS8K4nglen1UCo5uoH194UeGNeaVKUgADS/5Db4nadA9fQ8bOwpIyq9FpAA9IHqMkmQ7cHPJ6cYf4m0z25mVq4Wy7xJQQgBSSLJPGe9ZAHrE6sHd0LggsGM4St6IYqUXyf3Nshs36Mx70Kxi0YIh743frUAWDEXWv7VPtKjhLEBHN6ZB3F9W3HvwlRrpFKx5nJT6aeEdQxy+Day3cWel6a4j/VH2pm3LDGrkF9/WByu1ULCL5aUY46vKhAfVdWIucUc9ABi09+6xhI/mf8rcMUeK96qa/gCtE1f9Tn7bX8qolvJlOprJanYTiy2eOMjP0PCuWlOazW7oKoODIn74LHIZqz9Nk3zS9GmLsfc87M1BUM4ri9txoN8RlLu6mzR4Tf6D4uceDa8VlTJLCkxRyi/CDJDwIsmyWSeBHtoRn8AfeIhrZsmCCKq3giYUJawbprZB57aQ377f5r1ZasRrdUfpMXMw/6+YVqfnLzIaFfGsS2Jz5uddSIHww9fHYPEAy/0OIPG9AgmxrKFmi4DQe5O4I1wr3yuKRpMQtqJOBNS2vvryvoNmoMLLW2ThC5D1k2ig3/+FMMYNh8hsv6nYCz1o/EDnDxJ4bQAf9ulPAc/6feyqrk="
 deploy:
   provider: rubygems
   api_key:
@@ -11,3 +15,5 @@ deploy:
   on:
     tags: true
     repo: ayemos/bako
+after_success:
+  - bundle exec codeclimate-test-reporter

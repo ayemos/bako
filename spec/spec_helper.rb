@@ -1,6 +1,9 @@
 require "bundler/setup"
 require "bako"
 
+require "simplecov"
+SimpleCov.start
+
 require 'pathname'
 
 module SpecHelper
