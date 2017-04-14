@@ -4,9 +4,7 @@
 [![Test Coverage](https://codeclimate.com/github/ayemos/bako/badges/coverage.svg)](https://codeclimate.com/github/ayemos/bako/coverage)
 [![Issue Count](https://codeclimate.com/github/ayemos/bako/badges/issue_count.svg)](https://codeclimate.com/github/ayemos/bako)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bako`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Bako is a CLI tool to manage your [AWS Batch](https://aws.amazon.com/batch/) jobs. It also has its own DSL for AWS Batch.
 
 ## Installation
 
@@ -26,7 +24,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Prepare environment
+
+Before start using Bako, you need to prepare basic environment on AWS Batch.
+We need at least
+- one Job Queue
+- one Compute Environment
+- and one [Amazon EC2 Container Registory](https://aws.amazon.com/jp/ecr/) (only if you use container image for batch implementation)
+
+## Examples
 
 ## Development
 
