@@ -1,4 +1,8 @@
 # Bako
+[![Gem Version](https://badge.fury.io/rb/bako.svg)](https://badge.fury.io/rb/bako)
+[![Code Climate](https://codeclimate.com/github/ayemos/bako/badges/gpa.svg)](https://codeclimate.com/github/ayemos/bako)
+[![Test Coverage](https://codeclimate.com/github/ayemos/bako/badges/coverage.svg)](https://codeclimate.com/github/ayemos/bako/coverage)
+[![Issue Count](https://codeclimate.com/github/ayemos/bako/badges/issue_count.svg)](https://codeclimate.com/github/ayemos/bako)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bako`. To experiment with that code, run `bin/console` for an interactive prompt.
 
