@@ -6,7 +6,7 @@ module Bako
     class Job
       include Bako::CommonHelper
 
-      attr_reader :name, :job_definition, :depends_on, :param, :id, :memory, :vcpus, :job_queue
+      attr_reader :name, :job_definition, :depends_on, :param, :id, :memory, :vcpus, :job_queue, :command
 
       def self.from_context(context)
         new(
@@ -18,11 +18,12 @@ module Bako
           context.param_b,
           context.memory_b,
           context.vcpus_b,
-          context.job_queue_b
+          context.job_queue_b,
+          context.command_b
         )
       end
 
-      def initialize(name, job_definition, depends_on, param, memory, vcpus, job_queue)
+      def initialize(name, job_definition, depends_on, param, memory, vcpus, job_queue, command)
         @name = name
         @job_definition = job_definition
         @depends_on = depends_on
@@ -30,6 +31,7 @@ module Bako
         @memory = memory
         @vcpus = vcpus
         @job_queue = job_queue
+        @command = command
       end
 
       def start

@@ -1,6 +1,6 @@
 module Bako
   class DSL::Context::Job
-    attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b, :job_queue_b
+    attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b, :job_queue_b, :command_b
 
     def initialize(name, &block)
       @name = name
@@ -51,6 +51,10 @@ module Bako
 
     def job_queue(job_queue_b)
       @job_queue_b = job_queue_b
+    end
+
+    def command(command_b)
+      @command_b = command_b
     end
   end
 end
