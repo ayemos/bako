@@ -32,14 +32,10 @@ module Bako
 
       def start
         # start 'depends_on' jobs first
-        d_ids = []
-
-        @depends_on&.each do |job|
-          d_ids << job.start.job_id
-        end
+        @depends_on&.each{|j| job.start}
 
         Bako.logger.info("Submitting job #{@name}:")
-        Bako.logger.info({
+        job_arg = {
           job_definition: @job_definition.name,
           job_name: @name,
           job_queue: @job_queue,
@@ -50,25 +46,14 @@ module Bako
             vcpus: @vcpus,
             memory: @memory
           }
-        })
+        }
+
+        Bako.logger.info(job_arg)
 
         # start job
-=begin
-        resp = batch_client.submit_job({
-          job_definition: @job_definition.name,
-          job_name: @name,
-          job_queue: @job_queue,
-          depends_on: @depends_on&.map{|j| [[:job_id, j.id]].to_h},
-          parameters: @param,
-          container_overrides: {
-            command: @command,
-            vcpus: @vcpus,
-            memory: @memory
-          }
-        })
-
+        resp = batch_client.submit_job(job_arg)
         @id = resp.job_id
-=end
+
         Bako.logger.info("Submitted job #{@name} (id: #{@id})")
 
         resp
