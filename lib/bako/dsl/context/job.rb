@@ -59,10 +59,10 @@ module Bako
 
     def command(v)
       result[:command] = if v.is_a?(Array)
-        v.map(&:to_s)
-      else
-        v.split.map(&:to_s)
-      end
+                           v.map(&:to_s)
+                         else
+                           v.split.map(&:to_s)
+                         end
     end
   end
 end
