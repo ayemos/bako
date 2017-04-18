@@ -29,7 +29,7 @@ class Bako::DSL::Context
   ].each do |context|
     define_method(context) do |name, &block|
       name = name.to_s
-      result_key = "#{context.to_s}s".to_sym
+      result_key = "#{context.to_s.pluralize}".to_sym
 
       if result[result_key][name]
         raise "#{context.to_s.capitalize} `#{name}` is already defined"
