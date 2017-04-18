@@ -11,7 +11,7 @@ module Bako
     end
 
     def run
-      dsl.job_definitions.each do |_, jd_context|
+      dsl.result[:job_definitions].each do |_, jd_context|
         jd = Bako::Models::JobDefinition.from_context(jd_context)
 
         if jd.remote_exists?
@@ -30,7 +30,7 @@ module Bako
     private
 
     def jobs_to_be_run
-      dsl.jobs.values - dsl.jobs.values.map{|j| j.result[:depends_on]}.flatten
+      dsl.result[:jobs].values - dsl.result[:jobs].values.map{|j| j.result[:depends_on]}.flatten
     end
 
     def dsl

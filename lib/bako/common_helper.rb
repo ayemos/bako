@@ -25,12 +25,14 @@ module Bako
       }).job_definitions.map do |jd|
         Bako::Models::JobDefinition.new(
           jd.job_definition_name,
-          jd.container_properties&.command,
-          jd.container_properties&.image,
-          jd.container_properties&.job_role_arn,
-          jd.type,
-          jd.container_properties&.memory,
-          jd.container_properties&.vcpus
+          {
+            command: jd.container_properties&.command,
+            image: jd.container_properties&.image,
+            role_arn: jd.container_properties&.job_role_arn,
+            type: jd.type,
+            memory: jd.container_properties&.memory,
+            vcpus: jd.container_properties&.vcpus,
+          }
         )
       end
     end

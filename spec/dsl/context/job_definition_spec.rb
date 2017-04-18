@@ -7,7 +7,7 @@ require 'bako/dsl/context/job_definition'
 RSpec.describe Bako::DSL::Context::JobDefinition do
   let(:hello_fixture) { File.read(fixture_root.join('hello.rb')) }
   let(:hello_result) {
-    Bako::DSL.parse(hello_fixture).job_definitions['hello_def']
+    Bako::DSL.parse(hello_fixture).result[:job_definitions]['hello_def']
   }
 
   let(:missing_type_fixture) { File.read(fixture_root.join('missing_type.rb')) }

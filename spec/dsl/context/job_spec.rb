@@ -7,7 +7,7 @@ require 'bako/dsl/context/job_definition'
 RSpec.describe Bako::DSL::Context::Job do
   let(:hello_fixture) { File.read(fixture_root.join('hello.rb')) }
   let(:hello_result) {
-    Bako::DSL.parse(hello_fixture).jobs['hello']
+    Bako::DSL.parse(hello_fixture).result[:jobs]['hello']
   }
 
   let(:missing_def_fixture) { File.read(fixture_root.join('missing_def.rb')) }
@@ -15,10 +15,10 @@ RSpec.describe Bako::DSL::Context::Job do
 
   let(:command_fixture) { File.read(fixture_root.join('command.rb')) }
   let(:command_result_space) {
-    Bako::DSL.parse(command_fixture).jobs['command_space']
+    Bako::DSL.parse(command_fixture).result[:jobs]['command_space']
   }
   let(:command_result_int) {
-    Bako::DSL.parse(command_fixture).jobs['command_int']
+    Bako::DSL.parse(command_fixture).result[:jobs]['command_int']
   }
 
   it 'can parse job context' do

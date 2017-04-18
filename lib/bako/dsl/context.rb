@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+#
+require 'active_support/core_ext/string/inflections'
 
 class Bako::DSL::Context
-  attr_reader :jobs, :job_definitions
+  attr_reader :result
 
   def self.eval(dsl)
     new do
@@ -10,31 +12,34 @@ class Bako::DSL::Context
   end
 
   def initialize(&block)
-    @jobs = {}
-    @job_definitions = {}
+
+    @result = {
+      jobs: {},
+      job_definitions: {},
+    }
 
     instance_eval(&block)
   end
 
   private
 
-  def job(name, &block)
-    name = name.to_s
+  %i[
+    job
+    job_definition
+  ].each do |context|
+    define_method(context) do |name, &block|
+      name = name.to_s
+      result_key = "#{context.to_s}s".to_sym
 
-    if @jobs[name]
-      raise "Job `#{name}` is already defined"
+      if result[result_key][name]
+        raise "#{context.to_s.capitalize} `#{name}` is already defined"
+      end
+
+      @result[result_key][name] = load_context(context).new(name, &block)
     end
-
-    @jobs[name] = Bako::DSL::Context::Job.new(name, &block)
   end
 
-  def job_definition(name, &block)
-    name = name.to_s
-
-    if @job_definitions[name]
-      raise "JobDefinition `#{name}` is already defined"
-    end
-
-    @job_definitions[name] = Bako::DSL::Context::JobDefinition.new(name, &block)
+  def load_context(context)
+    Object.const_get("Bako::DSL::Context::#{context.to_s.camelize}")
   end
 end

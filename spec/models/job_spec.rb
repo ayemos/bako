@@ -5,7 +5,7 @@ require 'bako/models/job'
 RSpec.describe Bako::Models::Job do
   let(:hello_fixture) { File.read(fixture_root.join('hello.rb')) }
   let(:hello_context) {
-    Bako::DSL.parse(hello_fixture).jobs['hello']
+    Bako::DSL.parse(hello_fixture).result[:jobs]['hello']
   }
   let(:hello_result) {
     Bako::Models::Job.from_context(hello_context)
@@ -13,7 +13,7 @@ RSpec.describe Bako::Models::Job do
 
   let (:command_fixture) { 'command.rb' }
   let(:command_context) {
-    Bako::DSL.parse(File.read(fixture_root.join(command_fixture))).jobs['command']
+    Bako::DSL.parse(File.read(fixture_root.join(command_fixture))).result[:jobs]['command']
   }
   let(:command_result) {
     Bako::Models::Job.from_context(command_context)
