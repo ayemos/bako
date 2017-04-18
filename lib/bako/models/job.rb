@@ -32,7 +32,7 @@ module Bako
 
       def start
         # start 'depends_on' jobs first
-        @depends_on&.each{|j| job.start}
+        @depends_on&.each(&:start)
 
         Bako.logger.info("Submitting job #{@name}:")
         job_arg = {
