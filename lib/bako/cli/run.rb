@@ -30,7 +30,7 @@ module Bako
     private
 
     def jobs_to_be_run
-      dsl.jobs.values - dsl.jobs.values.map{|j| j.depends_on_b}.flatten
+      dsl.jobs.values - dsl.jobs.values.map{|j| j.result[:depends_on]}.flatten
     end
 
     def dsl

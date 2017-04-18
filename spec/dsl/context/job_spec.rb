@@ -23,9 +23,9 @@ RSpec.describe Bako::DSL::Context::Job do
 
   it 'can parse job context' do
     expect(hello_result.name).to eq('hello')
-    expect(hello_result.command_b).to eq (['echo', 'hello'])
-    expect(hello_result.memory_b).to eq (256)
-    expect(hello_result.vcpus_b).to eq (4)
+    expect(hello_result.result[:command]).to eq (['echo', 'hello'])
+    expect(hello_result.result[:memory]).to eq (256)
+    expect(hello_result.result[:vcpus]).to eq (4)
   end
 
   it 'raise when missing required params' do
@@ -34,7 +34,7 @@ RSpec.describe Bako::DSL::Context::Job do
   end
 
   it 'can parse job commands' do
-    expect(command_result_space.command_b).to eq(['echo', 'hello'])
-    expect(command_result_int.command_b).to eq(['sleep', '10'])
+    expect(command_result_space.result[:command]).to eq(['echo', 'hello'])
+    expect(command_result_int.result[:command]).to eq(['sleep', '10'])
   end
 end

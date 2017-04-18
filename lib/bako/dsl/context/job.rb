@@ -2,10 +2,11 @@
 
 module Bako
   class DSL::Context::Job
-    attr_reader :name, :param_b, :job_definition_b, :depends_on_b, :memory_b, :vcpus_b, :job_queue_b, :command_b
+    attr_reader :name, :result
 
     def initialize(name, &block)
       @name = name
+      @result = {}
 
       instance_eval(&block)
       validate!
@@ -13,9 +14,20 @@ module Bako
 
     private
 
+    %i[
+      param
+      memory
+      vcpus
+      job_queue
+    ].each do |attr|
+      define_method(attr) do |v|
+        result[attr] = v
+      end
+    end
+
     def validate!
-      raise InvalidArgumentError.new('job_queue must be set') unless @job_queue_b
-      raise InvalidArgumentError.new('job_definition must be set') unless @job_definition_b
+      raise InvalidArgumentError.new('job_queue must be set') unless result[:job_queue]
+      raise InvalidArgumentError.new('job_definition must be set') unless result[:job_definition]
     end
 
     def job_definition(jd)
@@ -23,7 +35,7 @@ module Bako
         raise InvalidArgumentError.new('JobDefinition must be set')
       end
 
-      @job_definition_b =
+      result[:job_definition] =
         if jd.is_a?(Bako::DSL::Context::JobDefinition)
           jd
         elsif jd.is_a?(String)
@@ -32,7 +44,7 @@ module Bako
     end
 
     def depends_on(jobs)
-      @depends_on_b = jobs&.map do |job|
+      result[:depends_on] = jobs&.map do |job|
         if job.is_a?(Bako::DSL::Context::Job)
           job
         elsif job.is_a?(String)
@@ -43,27 +55,11 @@ module Bako
       end
     end
 
-    def param(h)
-      @param_b = h
-    end
-
-    def memory(memory_b)
-      @memory_b = memory_b
-    end
-
-    def vcpus(vcpus_b)
-      @vcpus_b = vcpus_b
-    end
-
-    def job_queue(job_queue_b)
-      @job_queue_b = job_queue_b
-    end
-
-    def command(command_b)
-      if command_b.is_a?(Array)
-        @command_b = command_b.map(&:to_s)
+    def command(v)
+      if v.is_a?(Array)
+        result[:command] = v.map(&:to_s)
       else
-        @command_b = command_b.split.map(&:to_s)
+        result[:command] = v.split.map(&:to_s)
       end
     end
   end

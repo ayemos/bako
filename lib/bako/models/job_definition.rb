@@ -13,23 +13,18 @@ module Bako
       def self.from_context(context)
         new(
           context.name,
-          context.command_b,
-          context.image_b,
-          context.role_arn_b,
-          context.type_b,
-          context.memory_b,
-          context.vcpus_b
+          context.result
         )
       end
 
-      def initialize(name, command, image, role_arn, type, memory, vcpus)
+      def initialize(name, result)
         @name = name
-        @command = command
-        @image = image
-        @role_arn = role_arn
-        @type = type
-        @memory = memory
-        @vcpus = vcpus
+        @command = result[:command]
+        @image = result[:image]
+        @role_arn = result[:role_arn]
+        @type = result[:type]
+        @memory = result[:memory]
+        @vcpus = result[:vcpus]
       end
 
       def register
