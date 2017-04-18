@@ -7,7 +7,7 @@ module Bako
     DEFAULTS = {
       vcpus: 1,
       memory: 128
-    }
+    }.freeze
 
     def batch_client
       @batch_client ||= Aws::Batch::Client.new
