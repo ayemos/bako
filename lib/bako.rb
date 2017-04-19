@@ -2,6 +2,7 @@
 
 require "bako/version"
 require 'bako/common_helper'
+require 'logger'
 
 module Bako
   def Bako.logger

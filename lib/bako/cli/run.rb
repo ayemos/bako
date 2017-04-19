@@ -11,10 +11,12 @@ module Bako
     end
 
     def run
-      dsl.result[:job_definitions].each do |_, jd_context|
-        jd = Bako::Models::JobDefinition.from_context(jd_context)
+      dry_run = @options['dry_run']
 
-        if jd.remote_exists?
+      dsl.result[:job_definitions].each do |_, jd_context|
+        jd = Bako::Models::JobDefinition.from_context(jd_context, dry_run: dry_run)
+
+        if !dry_run && jd.remote_exists?
           y_or_n = @thor.ask("JobDefinition #{jd.name} seems to exist on remote. would you like to update it? (y/n)")
           next unless y_or_n =~ /y/i
         end
@@ -23,7 +25,7 @@ module Bako
       end
 
       jobs_to_be_run.each do |job|
-        Bako::Models::Job.from_context(job).start
+        Bako::Models::Job.from_context(job, dry_run: dry_run).start
       end
     end
 

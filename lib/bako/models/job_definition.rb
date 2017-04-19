@@ -10,14 +10,15 @@ module Bako
 
       attr_reader :name, :command, :role_arn, :image, :type, :arn, :memory, :vcpus
 
-      def self.from_context(context)
+      def self.from_context(context, dry_run: false)
         new(
           context.name,
-          context.result
+          context.result,
+          dry_run: dry_run
         )
       end
 
-      def initialize(name, result)
+      def initialize(name, result, dry_run: false)
         @name = name
         @command = result[:command]
         @image = result[:image]
@@ -25,12 +26,12 @@ module Bako
         @type = result[:type]
         @memory = result[:memory]
         @vcpus = result[:vcpus]
+        @dry_run = dry_run
       end
 
       def register
         Bako.logger.info("Registering JobDefinition #{@name}")
-
-        resp = batch_client.register_job_definition({
+        jd_arg = {
           type: @type,
           container_properties: {
             command: @command,
@@ -39,10 +40,20 @@ module Bako
             vcpus: @vcpus || DEFAULTS[:vcpus],
           },
           job_definition_name: @name
-        })
+        }
 
-        @arn = resp.job_definition_arn
-        @revision = resp.revision
+        Bako.logger.info("\n#{jd_arg.to_yaml}\n")
+
+        if @dry_run
+          @arn = 'dry_run'
+          @revision = 'dry_run'
+        else
+          resp = batch_client.register_job_definition(jd_arg)
+
+          @arn = resp.job_definition_arn
+          @revision = resp.revision
+        end
+
         Bako.logger.info("Registered JobDefinition #{@name}:#{@revision} (arn: #{@arn})")
       end
 
